@@ -1,3 +1,4 @@
+#include <SoftwareSerial.h>
 #include <SwitchControlLibrary.h>
 
 enum {
@@ -28,6 +29,8 @@ enum {
   RELEASE
 };
 
+SoftwareSerial mySerial(10, 11); // RX, TX
+
 void setup() {
   //connect to switch
   for (int i = 0; i < 3; ++i) {
@@ -39,23 +42,23 @@ void setup() {
     delay(500);
   }
   
-  Serial1.begin(115200);
+  mySerial.begin(115200);
  // Serial.begin(115200);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (Serial1.available() > 0) {
-    int button_type = Serial1.read();
+  if (mySerial.available() > 0) {
+    int button_type = mySerial.read();
     int button_command;
     int stick_x, stick_y;
-    while (Serial1.available() <= 0) {}
+    while (mySerial.available() <= 0) {}
     if (button_type == RSTICK or button_type == LSTICK) {
-      stick_x = Serial1.read();
-      while (Serial1.available() <= 0) {}
-      stick_y = Serial1.read();
+      stick_x = mySerial.read();
+      while (mySerial.available() <= 0) {}
+      stick_y = mySerial.read();
     } else {
-      button_command = Serial1.read();
+      button_command = mySerial.read();
     }
     
 
