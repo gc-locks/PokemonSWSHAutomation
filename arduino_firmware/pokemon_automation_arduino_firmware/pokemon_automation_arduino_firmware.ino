@@ -29,7 +29,7 @@ enum {
   RELEASE
 };
 
-SoftwareSerial mySerial(10, 11); // RX, TX
+SoftwareSerial mySerial(11, 10); // RX, TX
 
 void setup() {
   //connect to switch
