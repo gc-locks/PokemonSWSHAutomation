@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace PokemonAutomation
 {
@@ -24,17 +25,21 @@ namespace PokemonAutomation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowViewModel vm;
         private Connector controller;
+        private readonly MainWindowViewModel vm;
+        private CancellationTokenSource cs;
 
         public MainWindow()
         {
             vm = new MainWindowViewModel();
             DataContext = vm;
+
             InitializeComponent();
             GetSerialPorts();
-            vm.Actions = new IAction[] { new SampleAction() };
+            vm.Actions = new IAction[] { new Inqubate() };
         }
+
+        private bool Running => vm.CurerntAction != null;
 
         private void GetSerialPorts()
         {
@@ -82,8 +87,28 @@ namespace PokemonAutomation
 
         private void CallAction(object sender, RoutedEventArgs e)
         {
+            if (Running)
+            {
+                return;
+            }
+
             var action = (IAction)ActionSelector.SelectedItem;
-            action.Call();
+
+            cs = new CancellationTokenSource();
+            vm.CurerntAction = action;
+            action.CallAsync(cs.Token, controller);
+        }
+
+        private async void StopAction(object sender, RoutedEventArgs e)
+        {
+            if (Running)
+            {
+                cs.Cancel();
+                cs.Dispose();
+            }
+            cs = null;
+            vm.CurerntAction = null;
+            await controller.ClearAsync();
         }
     }
 }

@@ -1,11 +1,15 @@
-﻿namespace PokemonAutomation
+﻿using SwitchController;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace PokemonAutomation
 {
     public interface IAction
     {
         string Name { get; }
         string Description { get; }
         ActionArgument[] Arguments { get; }
-        void Call();
+        Task CallAsync(CancellationToken ctx, IController controller);
     }
 
     public class ActionArgument

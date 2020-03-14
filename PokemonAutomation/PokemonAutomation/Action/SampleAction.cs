@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Linq;
+using SwitchController;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PokemonAutomation.Action
 {
     class SampleAction : IAction
     {
-        ActionArgument[] arguments;
+        readonly ActionArgument[] arguments;
 
         public SampleAction()
         {
@@ -27,9 +30,10 @@ namespace PokemonAutomation.Action
             get { return arguments; }
         }
 
-        public void Call()
+        public Task CallAsync(CancellationToken ctx, IController controller)
         {
-            Debug.Write("sample: " + String.Join(",", arguments.Select(a => a.Value)));
+            Debug.Write("sample: " + string.Join(",", arguments.Select(a => a.Value)));
+            return Task.CompletedTask;
         }
     }
 }
