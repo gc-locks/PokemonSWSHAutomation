@@ -108,11 +108,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <local:CustomButton x:Name="Right" Grid.Column="2" Grid.Row="1" Content="→" IsPressedChaged="InputButton"/>
-                    <local:CustomButton x:Name="Down" Grid.Column="1" Grid.Row="2" Content="↓" IsPressedChaged="InputButton"/>
-                    <local:CustomButton x:Name="Up" Grid.Column="1" Grid.Row="0" Content="↑" IsPressedChaged="InputButton"/>
-                    <local:CustomButton x:Name="Left" Grid.Column="0" Grid.Row="1" Content="←" IsPressedChaged="InputButton"/>
-
+                    <local:CustomButton x:Name="Right" Grid.Column="2" Grid.Row="1" Content="→" IsPressedChaged="InputHat"/>
+                    <local:CustomButton x:Name="Down" Grid.Column="1" Grid.Row="2" Content="↓" IsPressedChaged="InputHat"/>
+                    <local:CustomButton x:Name="Up" Grid.Column="1" Grid.Row="0" Content="↑" IsPressedChaged="InputHat"/>
+                    <local:CustomButton x:Name="Left" Grid.Column="0" Grid.Row="1" Content="←" IsPressedChaged="InputHat"/>
                 </Grid>
 
                 <Grid Grid.Column="1">

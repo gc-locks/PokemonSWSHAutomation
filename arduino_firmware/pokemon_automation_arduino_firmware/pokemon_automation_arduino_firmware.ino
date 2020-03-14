@@ -2,11 +2,10 @@
 #include <SwitchControlLibrary.h>
 
 enum {
-  RIGHT = 0,
-  LEFT,
-  UP,
-  DOWN,
-  A,
+  HAT = 0,
+  RSTICK,
+  LSTICK,
+  A = 4,
   B,
   X,
   Y,
@@ -14,8 +13,6 @@ enum {
   L,
   ZR,
   ZL,
-  RSTICK,
-  LSTICK,
   RCLICK,
   LCLICK,
   HOME,
@@ -43,155 +40,124 @@ void setup() {
   }
   
   mySerial.begin(115200);
- // Serial.begin(115200);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   if (mySerial.available() > 0) {
-    int button_type = mySerial.read();
-    int button_command;
-    int stick_x, stick_y;
+    int button_type, data0, data1;
+
+    button_type = mySerial.read();
     while (mySerial.available() <= 0) {}
-    if (button_type == RSTICK or button_type == LSTICK) {
-      stick_x = mySerial.read();
-      while (mySerial.available() <= 0) {}
-      stick_y = mySerial.read();
-    } else {
-      button_command = mySerial.read();
-    }
-    
+    data0 = mySerial.read();
+    while (mySerial.available() <= 0) {}
+    data1 = mySerial.read();
 
     switch (button_type) {
-      case RIGHT:
-        if (button_command == PRESS) {
-          SwitchControlLibrary().MoveHat(2);
-        } else if (button_command == RELEASE) {
-          SwitchControlLibrary().MoveHat(8);
-        }
+      case HAT:
+        SwitchControlLibrary().MoveHat(data0);
         break;
-      case LEFT:
-        if (button_command == PRESS) {
-          SwitchControlLibrary().MoveHat(6);
-        } else if (button_command == RELEASE) {
-          SwitchControlLibrary().MoveHat(8);
-        }
+      case RSTICK:
+        SwitchControlLibrary().MoveRightStick(data0, data1);
         break;
-      case UP:
-        if (button_command == PRESS) {
-          SwitchControlLibrary().MoveHat(0);
-        } else if (button_command == RELEASE) {
-          SwitchControlLibrary().MoveHat(8);
-        }
-        break;
-      case DOWN:
-        if (button_command == PRESS) {
-          SwitchControlLibrary().MoveHat(4);
-        } else if (button_command == RELEASE) {
-          SwitchControlLibrary().MoveHat(8);
-        }
+      case LSTICK:
+        SwitchControlLibrary().MoveLeftStick(data0, data1);
         break;
       case A:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonA();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonA();
         }
         break;
       case B:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonB();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonB();
         }
         break;
       case X:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonX();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonX();
         }
         break;
       case Y:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonY();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonY();
         }
         break;
       case R:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonR();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonR();
         }
         break;
       case L:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonL();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonL();
         }
         break;
       case ZR:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonZR();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonZR();
         }
         break;
       case ZL:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonZL();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonZL();
         }
         break;  
-      case RSTICK:
-        SwitchControlLibrary().MoveRightStick(stick_x, stick_y);
-        break;
-      case LSTICK:
-        SwitchControlLibrary().MoveLeftStick(stick_x, stick_y);
-        break;
       case RCLICK:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonRClick();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonRClick();
         }
         break;        
       case LCLICK:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonLClick();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonLClick();
         }
         break;
       case HOME:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonHome();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonHome();
         }
         break;
       case CAPTURE:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonCapture();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonCapture();
         }
         break;
       case PLUS:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonPlus();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonPlus();
         }
         break;
       case MINUS:
-        if (button_command == PRESS) {
+        if (data0 == PRESS) {
           SwitchControlLibrary().PressButtonMinus();
-        } else if (button_command == RELEASE) {
+        } else if (data0 == RELEASE) {
           SwitchControlLibrary().ReleaseButtonMinus();
         }
         break;                

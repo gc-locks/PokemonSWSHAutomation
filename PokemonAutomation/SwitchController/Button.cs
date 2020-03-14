@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SwitchController
+﻿namespace SwitchController
 {
     public enum Button:byte
     {
-        Right = 0,
-        Left,
-        Up,
-        Down,
-        A,
+        A = 4,
         B,
         X,
         Y,
@@ -18,7 +10,7 @@ namespace SwitchController
         L,
         ZR,
         ZL,
-        RClick = 14,
+        RClick,
         LClick,
         Home,
         Capture,

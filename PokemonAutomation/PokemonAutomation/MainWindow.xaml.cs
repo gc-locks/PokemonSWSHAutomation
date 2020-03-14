@@ -66,6 +66,20 @@ namespace PokemonAutomation
             }
         }
 
+        private void InputHat(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var button = (System.Windows.Controls.Button)d;
+            if (!Enum.TryParse(button.Name, out SwitchController.HatState b))
+            {
+                return;
+            }
+            if (controller != null && controller.Available())
+            {
+                Debug.Print("{0}: {1}", b.ToString(), e.NewValue);
+                controller.InputHat((bool)e.NewValue ? b : HatState.Center);
+            }
+        }
+
         private void CallAction(object sender, RoutedEventArgs e)
         {
             var action = (IAction)ActionSelector.SelectedItem;

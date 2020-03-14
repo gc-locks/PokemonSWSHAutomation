@@ -40,15 +40,27 @@ namespace SwitchController
         {
             if (serialPort.IsOpen)
             {
-                byte[] data = new byte[2];
+                byte[] data = new byte[3];
                 data[0] = (byte)button;
                 data[1] = (byte)state;
 
-                serialPort.Write(data, 0, 2);
+                serialPort.Write(data, 0, 3);
             }
         }
 
-        public void InputHatSwitch(HatSwitch hatSwitch, HatState hatStateX, HatState hatStateY)
+        public void InputHat(HatState hatState)
+        {
+            if (serialPort.IsOpen)
+            {
+                byte[] data = new byte[3];
+                data[0] = (byte)0x00;
+                data[1] = (byte)HatStateUtil.ToNativeHatState(hatState);
+
+                serialPort.Write(data, 0, 3);
+            }
+        }
+
+        public void InputStick(Stick hatSwitch, StickState hatStateX, StickState hatStateY)
         {
             if (serialPort.IsOpen)
             {
