@@ -1,4 +1,5 @@
-﻿using SwitchController;
+﻿using PokemonAutomation.Action;
+using SwitchController;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,6 +33,7 @@ namespace PokemonAutomation
             DataContext = vm;
             InitializeComponent();
             GetSerialPorts();
+            vm.Actions = new IAction[] { new SampleAction() };
         }
 
         private void GetSerialPorts()
@@ -62,6 +64,12 @@ namespace PokemonAutomation
                 Debug.Print("{0}: {1}", b.ToString(), e.NewValue);
                 controller.InputButton(b, (bool)e.NewValue ? ButtonState.PRESS : ButtonState.RELEASE);
             }
+        }
+
+        private void CallAction(object sender, RoutedEventArgs e)
+        {
+            var action = (IAction)ActionSelector.SelectedItem;
+            action.Call();
         }
     }
 }

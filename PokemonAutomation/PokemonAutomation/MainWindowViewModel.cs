@@ -8,6 +8,7 @@ namespace PokemonAutomation
     class MainWindowViewModel: INotifyPropertyChanged
     {
         private string[] comPorts;
+        private IAction[] actions;
 
         public string[] ComPorts
         {
@@ -19,6 +20,19 @@ namespace PokemonAutomation
             {
                 comPorts = value;
                 OnPropertyChanged("ComPorts");
+            }
+        }
+
+        public IAction[] Actions
+        {
+            get
+            {
+                return actions;
+            }
+            set
+            {
+                actions = value;
+                OnPropertyChanged("Actions");
             }
         }
 
