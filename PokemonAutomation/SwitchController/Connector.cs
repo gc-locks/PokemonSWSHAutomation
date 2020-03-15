@@ -40,11 +40,10 @@ namespace SwitchController
         {
             if (serialPort.IsOpen)
             {
-                byte[] data = new byte[3];
-                data[0] = (byte)button;
-                data[1] = (byte)state;
+                byte[] data = new byte[1];
+                data[0] = (byte)(0xc0 | ((byte)state << 4) | ((byte)button));
 
-                serialPort.Write(data, 0, 3);
+                serialPort.Write(data, 0, 1);
             }
         }
 
@@ -52,11 +51,10 @@ namespace SwitchController
         {
             if (serialPort.IsOpen)
             {
-                byte[] data = new byte[3];
-                data[0] = (byte)0x00;
-                data[1] = (byte)HatStateUtil.ToNativeHatState(hatState);
+                byte[] data = new byte[1];
+                data[0] = (byte)(0xe0 | ((byte)HatStateUtil.ToNativeHatState(hatState)));
 
-                serialPort.Write(data, 0, 3);
+                serialPort.Write(data, 0, 1);
             }
         }
 
@@ -66,8 +64,8 @@ namespace SwitchController
             {
                 byte[] data = new byte[3];
                 data[0] = (byte)hatSwitch;
-                data[1] = (byte)hatStateX;
-                data[2] = (byte)hatStateY;
+                data[1] = (byte)(0x7f & ((byte)hatStateX >> 1));
+                data[2] = (byte)(0x7f & ((byte)hatStateY >> 1));
 
                 serialPort.Write(data, 0, 3);
             }

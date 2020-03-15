@@ -2,7 +2,7 @@
 {
     public enum ButtonState : byte
     {
-        PRESS = 0,
-        RELEASE
+        RELEASE = 0,
+        PRESS,
     }
 }

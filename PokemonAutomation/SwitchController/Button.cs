@@ -2,7 +2,7 @@
 {
     public enum Button:byte
     {
-        A = 4,
+        A = 0,
         B,
         X,
         Y,
