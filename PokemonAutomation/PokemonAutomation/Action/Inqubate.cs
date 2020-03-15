@@ -15,9 +15,6 @@ namespace PokemonAutomation.Action
             arguments = new ActionArgument[]
             {
                 new ActionArgument("孵化サイクル")
-                {
-                    Value = "20"
-                }
             };
         }
 

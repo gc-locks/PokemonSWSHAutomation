@@ -36,7 +36,11 @@ namespace PokemonAutomation
 
             InitializeComponent();
             GetSerialPorts();
-            vm.Actions = new IAction[] { new Inqubate() };
+            vm.Actions = new IAction[]
+            {
+                new ForwardDays(),
+                new Inqubate(),
+            };
         }
 
         private bool Running => vm.CurerntAction != null;

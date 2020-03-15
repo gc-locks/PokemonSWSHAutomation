@@ -30,10 +30,10 @@ namespace PokemonAutomation.Action
             get { return arguments; }
         }
 
-        public Task CallAsync(CancellationToken ctx, IController controller)
+        public async Task CallAsync(CancellationToken ctx, IController controller)
         {
             Debug.Write("sample: " + string.Join(",", arguments.Select(a => a.Value)));
-            return Task.CompletedTask;
+            await ControllerUtil.DelayAsync(ctx, 100);
         }
     }
 }
