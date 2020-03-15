@@ -100,19 +100,32 @@ namespace PokemonAutomation
 
             cs = new CancellationTokenSource();
             vm.CurerntAction = action;
-            action.CallAsync(cs.Token, controller);
+
+            Task.Run(async () =>
+            {
+                await action.CallAsync(cs.Token, controller);
+                ClearAction();
+            });
         }
 
         private async void StopAction(object sender, RoutedEventArgs e)
         {
             if (Running)
             {
-                cs.Cancel();
+                cs?.Cancel();
+            }
+            ClearAction();
+            await controller.ClearAsync();
+        }
+
+        private void ClearAction()
+        {
+            if (cs != null)
+            {
                 cs.Dispose();
             }
             cs = null;
             vm.CurerntAction = null;
-            await controller.ClearAsync();
         }
     }
 }
