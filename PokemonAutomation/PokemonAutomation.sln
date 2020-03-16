@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwitchController", "SwitchController\SwitchController.csproj", "{20023AB4-B659-4CD5-947E-C5300B87178B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonAutomation", "PokemonAutomation\PokemonAutomation.csproj", "{FC47945B-F22E-4987-A595-88161DFB2226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonAutomation", "PokemonAutomation\PokemonAutomation.csproj", "{FC47945B-F22E-4987-A595-88161DFB2226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchControllerTest", "SwitchControllerTest\SwitchControllerTest.csproj", "{5192F3D4-6E0B-4569-8A04-6213BE5FEA42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FC47945B-F22E-4987-A595-88161DFB2226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC47945B-F22E-4987-A595-88161DFB2226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC47945B-F22E-4987-A595-88161DFB2226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5192F3D4-6E0B-4569-8A04-6213BE5FEA42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5192F3D4-6E0B-4569-8A04-6213BE5FEA42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5192F3D4-6E0B-4569-8A04-6213BE5FEA42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5192F3D4-6E0B-4569-8A04-6213BE5FEA42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
