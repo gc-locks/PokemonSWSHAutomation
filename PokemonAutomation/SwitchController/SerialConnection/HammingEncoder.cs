@@ -28,10 +28,10 @@ namespace SwitchController.SerialConnection
 
         private static int Mul(int[] M, int x, int columns)
         {
-            var Mix = M.Select(Mi => x & Mi).ToArray();
+            var Mx = M.Select(Mi => x & Mi).ToArray();
             return (byte)Enumerable.Range(0, columns).Select(i =>
             {
-                return Mix
+                return Mx
                 .Select((m, j) => ((m >> i) & 1) << j)
                 .Aggregate((p, q) => p | q);
             })

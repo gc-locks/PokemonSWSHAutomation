@@ -152,28 +152,102 @@ void inputStick(uint8_t stick, uint8_t stateX, uint8_t stateY) {
     }
 }
 
+uint8_t Mul(uint8_t* M, int rows, int columns, uint8_t x) {
+  std::vector<uint8_t> Mx(rows);
+  for (int i=0; i < rows; i++) {
+    Mx[i] = x & M[i];
+  }
+
+  uint8_t y = 0;
+  for (int j=0; j < columns; j++) {
+    uint8_t z = 0;
+    for (int i=0; i < rows; i++) {
+      z |= ((M[i] >> j) & 1) << i;
+    }
+    y ^= z;
+  }
+  return y;
+}
+
+uint8_t H[] = {
+  0xff, 0x1f, 0x66, 0xaa
+};
+
+bool TryDecode(uint8_t x, uint8_t& decoded) {
+  uint8_t Hx = Mul(H, 4, 8, x);
+  if (!Hx) {
+    decoded = ((x & 0x20) >> 2) | ((x & 0x0e) >> 1);
+    return true;
+  }
+
+  uint8_t find = 0;
+  for (int i=0; i < 4; i++) {
+    find |= H[i] ^ ((Hx & (1 << i)) ? 0xff : 0x00);
+  }
+  find ^= 0xff;
+
+  int index = -1;
+  for (int i = 0; i < 8; i++) {
+    if (find & (1 << i)) {
+      if (index >= 0) {
+        return false;
+      }
+      index = i;
+    }
+  }
+
+  x ^= 1 << index;
+  decoded = ((x & 0x20) >> 2) | ((x & 0x0e) >> 1);
+  return true;
+}
+
+bool TryDecode2(uint8_t x[2], uint8_t& decoded) {
+  uint8_t upper;
+  if (!TryDecode(x[0], upper)) {
+    return false;
+  }
+
+  if (!TryDecode(x[1], decoded)) {
+    return false;
+  }
+
+  decoded = ((upper & 0x0f) << 4) | (decoded & 0x0f);
+  return true;
+}
+
 void loop() {
-  while (mySerial.available() > 0) {
-    uint8_t data[3];
+  while (mySerial.available() >= 2) {
+    uint8_t data[2];
     data[0] = mySerial.read();
-    if (data[0] & 0x80) {
+    data[1] = mySerial.read();
+    uint8_t input;
+    if (!TryDecode2(data, input)) {
+      continue;
+    }
+
+    if (input & 0x80) {
       // 制御信号
-      if (data[0] & 0x40) {
+      if (input & 0x40) {
         // ボタン入力
-        if (data[0] & 0x20) {
+        if (input & 0x20) {
           // HAT
-          inputHat(data[0] & 0x0f);
+          inputHat(input & 0x0f);
         } else {
           // ボタン
-          inputButton(data[0] & 0x0f, (data[0] & 0x10) >> 4);
+          inputButton(input & 0x0f, (input & 0x10) >> 4);
         }
-      } else if (mySerial.available() >= 2) {
+      } else if (mySerial.available() >= 4) {
         // スティック入力
+        uint8_t inputs[2];
         for (int i = 0; i < 2; i++) {
-          data[i+1] = mySerial.read();
+          data[0] = mySerial.read();
+          data[1] = mySerial.read();
+          if (!TryDecode2(data, inputs[i])) {
+            inputs[i] = 64;
+          }
         }
-        if (!(data[1] & 0x80) && !(data[2] & 0x80)) {
-          inputStick((data[0] & 0x10) >> 4, data[1] << 1, data[2] << 1);
+        if (!(inputs[1] & 0x80) && !(inputs[2] & 0x80)) {
+          inputStick((input & 0x10) >> 4, inputs[1] << 1, inputs[2] << 1);
         }
       }
     }
