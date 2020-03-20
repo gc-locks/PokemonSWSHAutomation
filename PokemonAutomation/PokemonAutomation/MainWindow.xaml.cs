@@ -25,7 +25,7 @@ namespace PokemonAutomation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Connector controller;
+        private EthernetConnector controller;
         private readonly MainWindowViewModel vm;
         private CancellationTokenSource cs;
 
@@ -34,31 +34,33 @@ namespace PokemonAutomation
             vm = new MainWindowViewModel();
             DataContext = vm;
 
-            InitializeComponent();
-            GetSerialPorts();
             vm.Actions = new IAction[]
             {
                 new ForwardDays(),
                 new Inqubate(),
             };
+
+            InitializeComponent();
+
+            controller = new EthernetConnector("192.168.1.177");
         }
 
         private bool Running => vm.CurerntAction != null;
 
         private void GetSerialPorts()
         {
-            vm.ComPorts = SwitchController.Connector.GetSerialPorts();
+            //vm.ComPorts = SwitchController.Connector.GetSerialPorts();
         }
 
         private void COMPort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (controller != null)
-            {
-                controller.Dispose();
-            }
+            //if (controller != null)
+            //{
+            //    controller.Dispose();
+            //}
 
-            var cb = (System.Windows.Controls.ComboBox)sender;
-            controller = new Connector((string)cb.SelectedItem);
+            //var cb = (System.Windows.Controls.ComboBox)sender;
+            //controller = new Connector((string)cb.SelectedItem);
         }
 
         private void InputButton(DependencyObject d, DependencyPropertyChangedEventArgs e)
