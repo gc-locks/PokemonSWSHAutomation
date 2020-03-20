@@ -55,15 +55,18 @@ namespace PokemonAutomation.Action
             {
                 await c.PushButtonAsync(ctx, Button.Home, 1000);
                 await c.PushButtonAsync(ctx, Button.X, 1000);
-                await c.PushButtonAsync(ctx, Button.A, 4000);
-                await c.PushButtonAsync(ctx, Button.A, 2000);
-                await c.PushButtonAsync(ctx, Button.A, 18000);
-                await c.PushButtonAsync(ctx, Button.A, 8000);
+                await c.PushButtonNAsync(ctx, Button.A, 1000, 35);
             }
-            else
+
+            await c.PushButtonNAsync(ctx, Button.B, 1000, 4);
+
+            if (reset)
             {
-                await c.PushButtonNAsync(ctx, Button.B, 500, 4);
+                await ControllerUtil.DelayAsync(ctx, 1000);
+                await c.PushButtonNAsync(ctx, Button.A, 1000, 2);
+                await c.PushButtonNAsync(ctx, Button.B, 1000, 3);
             }
+
 
             for (int i = days-1; i >= 0 && !ctx.IsCancellationRequested; i--)
             {
