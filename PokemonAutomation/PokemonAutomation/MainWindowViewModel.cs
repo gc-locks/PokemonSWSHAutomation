@@ -11,13 +11,12 @@ namespace PokemonAutomation
         private string[] comPorts;
         private IAction[] actions;
         private IAction currentAction;
+        private string ipAddr;
+        private bool controllerConnected;
 
         public string[] ComPorts
         {
-            get
-            {
-                return comPorts;
-            }
+            get => comPorts;
             set
             {
                 comPorts = value;
@@ -27,10 +26,7 @@ namespace PokemonAutomation
 
         public IAction[] Actions
         {
-            get
-            {
-                return actions;
-            }
+            get => actions;
             set
             {
                 actions = value;
@@ -40,33 +36,39 @@ namespace PokemonAutomation
 
         public IAction CurerntAction
         {
-            get
-            {
-                return currentAction;
-            }
+            get => currentAction;
             set
             {
                 currentAction = value;
                 OnPropertyChanged("CurrentAction");
-                OnPropertyChanged("GetExecuteVisibility");
-                OnPropertyChanged("GetStopVisibility");
+                OnPropertyChanged("ActionRunning");
+                OnPropertyChanged("ActionNotRunning");
+            }
+        }
+        public bool ActionRunning => currentAction != null;
+        public bool ActionNotRunning => currentAction == null;
+
+        public string IPAddr
+        {
+            get => ipAddr;
+            set
+            {
+                ipAddr = value;
+                OnPropertyChanged("IPAddr");
             }
         }
 
-        public Visibility GetExecuteVisibility
+        public bool ControllerConnected
         {
-            get
+            get => controllerConnected;
+            set
             {
-                return currentAction != null ? Visibility.Collapsed : Visibility.Visible;
+                controllerConnected = value;
+                OnPropertyChanged("ControllerConnected");
+                OnPropertyChanged("ControllerDisconnected");
             }
         }
-        public Visibility GetStopVisibility
-        {
-            get
-            {
-                return currentAction == null ? Visibility.Collapsed : Visibility.Visible;
-            }
-        }
+        public bool ControllerDisconnected => !controllerConnected;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

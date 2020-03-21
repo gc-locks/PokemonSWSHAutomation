@@ -22,6 +22,7 @@ namespace SwitchController
 
         public void Dispose()
         {
+            client.GetStream().Close();
             client.Close();
             client.Dispose();
         }

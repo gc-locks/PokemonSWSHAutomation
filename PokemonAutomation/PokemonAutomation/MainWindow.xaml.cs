@@ -41,26 +41,22 @@ namespace PokemonAutomation
             };
 
             InitializeComponent();
-
-            controller = new EthernetConnector("192.168.1.177");
         }
 
         private bool Running => vm.CurerntAction != null;
+        private bool ControllerAvailable => controller != null && controller.Available();
 
-        private void GetSerialPorts()
+        private void ConnectEthernetController(object sender, RoutedEventArgs e)
         {
-            //vm.ComPorts = SwitchController.Connector.GetSerialPorts();
+            controller = new EthernetConnector(vm.IPAddr);
+            vm.ControllerConnected = true;
         }
 
-        private void COMPort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DisconnectEthernetController(object sender, RoutedEventArgs e)
         {
-            //if (controller != null)
-            //{
-            //    controller.Dispose();
-            //}
-
-            //var cb = (System.Windows.Controls.ComboBox)sender;
-            //controller = new Connector((string)cb.SelectedItem);
+            controller.Dispose();
+            controller = null;
+            vm.ControllerConnected = false;
         }
 
         private void InputButton(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -70,7 +66,7 @@ namespace PokemonAutomation
             {
                 return;
             }
-            if (controller != null && controller.Available())
+            if (ControllerAvailable)
             {
                 Debug.Print("{0}: {1}", b.ToString(), e.NewValue);
                 controller.InputButton(b, (bool)e.NewValue ? ButtonState.PRESS : ButtonState.RELEASE);
@@ -84,7 +80,7 @@ namespace PokemonAutomation
             {
                 return;
             }
-            if (controller != null && controller.Available())
+            if (ControllerAvailable)
             {
                 Debug.Print("{0}: {1}", b.ToString(), e.NewValue);
                 controller.InputHat((bool)e.NewValue ? b : HatState.Center);
@@ -93,7 +89,7 @@ namespace PokemonAutomation
 
         private void CallAction(object sender, RoutedEventArgs e)
         {
-            if (Running)
+            if (Running || !ControllerAvailable)
             {
                 return;
             }
@@ -112,7 +108,7 @@ namespace PokemonAutomation
 
         private async void StopAction(object sender, RoutedEventArgs e)
         {
-            if (Running)
+            if (Running || !ControllerAvailable)
             {
                 cs?.Cancel();
             }
