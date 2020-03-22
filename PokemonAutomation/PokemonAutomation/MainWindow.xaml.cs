@@ -39,6 +39,8 @@ namespace PokemonAutomation
                 new ForwardDays(),
                 new FastForwardDays(),
                 new Inqubate(),
+                new TryLotoID(),
+                new Horidashimono(),
             };
 
             InitializeComponent();

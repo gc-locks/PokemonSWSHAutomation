@@ -10,7 +10,7 @@ namespace PokemonAutomation
         string Name { get; }
         string Description { get; }
         ActionArgument[] Arguments { get; }
-        Task CallAsync(CancellationToken ctx, IController controller);
+        Task CallAsync(CancellationToken ctx, IController c);
     }
 
     public class ActionArgument : INotifyPropertyChanged

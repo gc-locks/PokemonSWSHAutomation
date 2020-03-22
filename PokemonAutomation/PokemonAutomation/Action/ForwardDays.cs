@@ -31,8 +31,7 @@ namespace PokemonAutomation.Action
 
         public string Name => "N日進める";
 
-        public string Description => @"
-巣穴を用いてN日時計をすすめる";
+        public string Description => @"巣穴を用いてN日時計をすすめる from https://github.com/interimadd/NintendoSwitchControll";
 
         public ActionArgument[] Arguments { get; }
 
@@ -76,41 +75,20 @@ namespace PokemonAutomation.Action
                 await c.PushButtonAsync(ctx, Button.A, 1000);
                 // 募集開始
                 await c.PushButtonAsync(ctx, Button.A, 3000);
-                // ホーム画面 > 設定
-                await c.PushButtonAsync(ctx, Button.Home, 1000);
-                await c.PushHatAsync(ctx, HatState.Down, 100);
-                await c.PushHatNAsync(ctx, HatState.Right, 100, 4);
-                await ControllerUtil.DelayAsync(ctx, 200);
-                await c.PushButtonAsync(ctx, Button.A, 1000);
-                // 設定 > 本体 > 日付と時刻
-                await c.PushHatTAsync(ctx, HatState.Down, 2000, 0);
-                await c.PushHatAsync(ctx, HatState.Right, 100);
-                await c.PushHatNAsync(ctx, HatState.Down, 100, 4);
-                await ControllerUtil.DelayAsync(ctx, 200);
-                await c.PushButtonAsync(ctx, Button.A, 700);
-                // 日付と時刻 > 現在の日付と時刻
-                await c.PushHatNAsync(ctx, HatState.Down, 100, 2);
-                await ControllerUtil.DelayAsync(ctx, 200);
-                await c.PushButtonAsync(ctx, Button.A, 500);
-                await c.PushHatNAsync(ctx, HatState.Right, 100, 2);
-                await ControllerUtil.DelayAsync(ctx, 200);
-                await c.PushHatAsync(ctx, HatState.Up, 100);
-                await c.PushHatTAsync(ctx, HatState.Right, 1000, 0);
-                await c.PushButtonAsync(ctx, Button.A, 500);
 
-                var nextDay = new DateTime(clock.Year, clock.Month, clock.Day).AddDays(1);
-                if (nextDay.Month != clock.Month)
+                await Common.Forward1Day(ctx, c, false, (countDate) =>
                 {
-                    nextDay = nextDay.AddMonths(-1);
-                    i++;
-                }
-                clock = nextDay;
-                if (!ctx.IsCancellationRequested)
-                    Arguments[0].Value = clock.ToString("yyyy-MM-dd");
+                    var counted = countDate(clock, out DateTime next);
 
-                // ホーム画面 > ゲーム画面
-                await c.PushButtonAsync(ctx, Button.Home, 1000);
-                await c.PushButtonAsync(ctx, Button.A, 500);
+                    clock = next;
+                    if (!ctx.IsCancellationRequested)
+                    {
+                        if (!counted)
+                            i++;
+                        Arguments[0].Value = clock.ToString("yyyy-MM-dd");
+                    }
+                });
+
                 // レイド募集中止
                 await c.PushButtonAsync(ctx, Button.B, 1000);
                 await c.PushButtonAsync(ctx, Button.A, 4000);

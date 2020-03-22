@@ -20,7 +20,7 @@ namespace PokemonAutomation.Action
 
         public string Name => "孵化";
 
-        public string Description => @"育て屋から卵を回収→孵化→ボックスに預けるを繰り返す
+        public string Description => @"育て屋から卵を回収→孵化→ボックスに預けるを繰り返す from https://github.com/interimadd/NintendoSwitchControll
 ボックスに空きがある限り、ポケモンを孵化し続ける
 
 初期条件は以下の通り
