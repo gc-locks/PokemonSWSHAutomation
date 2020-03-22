@@ -61,15 +61,19 @@ namespace PokemonAutomation.Action
                 await c.PushHatTAsync(ctx, HatState.Right, 1000, 0);
                 await c.PushButtonAsync(ctx, Button.A, 500);
 
-                var nextDay = new DateTime(clock.Year, clock.Month, clock.Day).AddDays(1);
-                if (nextDay.Month != clock.Month)
-                {
-                    nextDay = nextDay.AddMonths(-1);
-                    i++;
-                }
-                clock = nextDay;
                 if (!ctx.IsCancellationRequested)
+                {
+                    var nextDay = new DateTime(clock.Year, clock.Month, clock.Day).AddDays(1);
+                    if (nextDay.Month != clock.Month)
+                    {
+                        nextDay = nextDay.AddMonths(-1);
+                        i++;
+                    }
+                    clock = nextDay;
+
                     Arguments[0].Value = clock.ToString("yyyy-MM-dd");
+                    Arguments[1].Value = i.ToString();
+                }
             }
         }
     }

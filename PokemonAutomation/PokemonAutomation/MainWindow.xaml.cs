@@ -37,6 +37,7 @@ namespace PokemonAutomation
             vm.Actions = new IAction[]
             {
                 new ForwardDays(),
+                new FastForwardDays(),
                 new Inqubate(),
             };
 
