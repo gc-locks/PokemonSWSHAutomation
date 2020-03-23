@@ -45,6 +45,11 @@ namespace PokemonAutomation
 
             InitializeComponent();
         }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (controller != null)
+                controller.Dispose();
+        }
 
         private bool Running => vm.CurerntAction != null;
         private bool ControllerAvailable => controller != null && controller.Available();

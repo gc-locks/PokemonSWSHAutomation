@@ -45,15 +45,13 @@ void loop() {
               // ボタン
               inputButton(input & 0x0f, (input & 0x10) >> 4);
             }
-          } else if (client.available() >= 4) {
+          } else if (client.available() >= 2) {
             // スティック入力
             uint8_t inputs[2];
             for (int i = 0; i < 2; i++) {
               inputs[i] = client.read();
             }
-            if (!(inputs[0] & 0x80) && !(inputs[1] & 0x80)) {
-              inputStick((input & 0x10) >> 4, inputs[0] << 1, inputs[1] << 1);
-            }
+            inputStick((input & 0x10) >> 4, inputs[0], inputs[1]);
           }
         }
       }

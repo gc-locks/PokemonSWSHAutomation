@@ -63,10 +63,9 @@ namespace SwitchController
 
             var stream = client.GetStream();
             byte[] data = new byte[3];
-            data[0] = (byte)hatSwitch;
-            data[1] = (byte)(0x7f & ((byte)hatStateX >> 1));
-            data[2] = (byte)(0x7f & ((byte)hatStateY >> 1));
-
+            data[0] = (byte)(0x80 | ((byte)hatSwitch << 4));
+            data[1] = (byte)hatStateX;
+            data[2] = (byte)hatStateY;
             stream.Write(data, 0, data.Length);
         }
     }

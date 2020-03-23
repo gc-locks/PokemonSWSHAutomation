@@ -2,7 +2,7 @@
 {
     public enum Stick: byte
     {
-        RSTICK = 1,
+        RSTICK = 0,
         LSTICK,
     }
 }
