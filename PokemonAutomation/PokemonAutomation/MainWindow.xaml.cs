@@ -41,6 +41,7 @@ namespace PokemonAutomation
                 new Inqubate(),
                 new TryLotoID(),
                 new Horidashimono(),
+                new RaidBattle(),
             };
 
             InitializeComponent();

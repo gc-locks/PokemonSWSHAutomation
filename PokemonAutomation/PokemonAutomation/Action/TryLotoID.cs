@@ -17,7 +17,8 @@ namespace PokemonAutomation.Action
 
         public string Name => "ロトミ IDくじ";
 
-        public string Description => @"IDくじを引き続ける from https://github.com/interimadd/NintendoSwitchControll
+        public string Description => @"IDくじを引き続ける
+from https://github.com/interimadd/NintendoSwitchControll
 
 初期条件は以下の通り
 1.ランクマッチバグを使用し、使える状態であること
