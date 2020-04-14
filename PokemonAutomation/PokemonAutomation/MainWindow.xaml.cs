@@ -42,6 +42,7 @@ namespace PokemonAutomation
                 new TryLotoID(),
                 new Horidashimono(),
                 new RaidBattle(),
+                new GainWatt(),
             };
 
             InitializeComponent();

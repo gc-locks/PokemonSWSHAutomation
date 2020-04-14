@@ -10,7 +10,7 @@ namespace PokemonAutomation.Action
     internal static class Common
     {
         public delegate bool CountDate(DateTime current, out DateTime next);
-        public static async Task Forward1Day(CancellationToken ctx, IController c, bool twice, Action<CountDate> onChangeDate = null)
+        public static async Task Forward1Day(CancellationToken ctx, IController c, bool twice, Func<CountDate, bool> onChangeDate = null)
         {
             // ホーム画面 > 設定
             await c.PushButtonAsync(ctx, Button.Home, 1000);
@@ -34,10 +34,11 @@ namespace PokemonAutomation.Action
             await c.PushHatTAsync(ctx, HatState.Right, 1000, 0);
             await c.PushButtonAsync(ctx, Button.A, 500);
 
+            bool twice2 = false;
             if (onChangeDate != null && !ctx.IsCancellationRequested)
-                onChangeDate(CountDateImpl);
+                twice2 = onChangeDate(CountDateImpl);
 
-            if (twice)
+            if (twice || twice2)
             {
                 // 月末の可能性を考慮して二日進める
                 await c.PushButtonAsync(ctx, Button.A, 500);

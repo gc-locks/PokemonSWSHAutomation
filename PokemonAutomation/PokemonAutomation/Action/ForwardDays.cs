@@ -87,6 +87,7 @@ namespace PokemonAutomation.Action
                             i++;
                         Arguments[0].Value = clock.ToString("yyyy-MM-dd");
                     }
+                    return false;
                 });
 
                 // レイド募集中止
