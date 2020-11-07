@@ -43,6 +43,7 @@ namespace PokemonAutomation
                 new Horidashimono(),
                 new RaidBattle(),
                 new GainWatt(),
+                new CaptureCalyrex(),
             };
 
             InitializeComponent();
