@@ -62,6 +62,16 @@ namespace SwitchController
                 await c.PushButtonAsync(ctx, button, delay);
             }
         }
+        public static async Task PushButtonTAsync(this IController c, CancellationToken ctx, Button button, int delay, int duration)
+        {
+            if (ctx.IsCancellationRequested)
+                return;
+            int count = duration / (delay + ButtonDelay) + 1;
+            for (int i = 0; i < count; i++)
+            {
+                await c.PushButtonAsync(ctx, button, delay);
+            }
+        }
         public static async Task PushHatAsync(this IController c, CancellationToken ctx, HatState s, int delay)
         {
             await c.PushHatTAsync(ctx, s, ButtonDelay, delay);

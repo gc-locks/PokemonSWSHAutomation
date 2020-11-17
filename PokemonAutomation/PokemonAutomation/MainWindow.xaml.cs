@@ -40,6 +40,7 @@ namespace PokemonAutomation
                 new FastForwardDays(),
                 new Inqubate(),
                 new TryLotoID(),
+                new Berry(),
                 new Horidashimono(),
                 new RaidBattle(),
                 new GainWatt(),
