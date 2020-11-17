@@ -41,6 +41,7 @@ namespace PokemonAutomation
                 new Inqubate(),
                 new TryLotoID(),
                 new Berry(),
+                new Tournament(),
                 new Horidashimono(),
                 new RaidBattle(),
                 new GainWatt(),
